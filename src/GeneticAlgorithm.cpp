@@ -2,13 +2,14 @@
 #include <iostream>
 #include <algorithm>
 #include <random>
+using namespace std;
 
 GeneticAlgorithm::GeneticAlgorithm() {}
 
 GeneticAlgorithm::~GeneticAlgorithm() {}
 
-std::vector<std::vector<int>> GeneticAlgorithm::initializePopulation(int populationSize, int chromosomeSize) {
-    std::vector<std::vector<int>> population(populationSize, std::vector<int>(chromosomeSize));
+vector<vector<int>> GeneticAlgorithm::initializePopulation(int populationSize, int chromosomeSize) {
+    vector<vector<int>> population(populationSize, vector<int>(chromosomeSize));
     for (auto& chromosome : population) {
         for (int i = 0; i < chromosomeSize; ++i) {
             chromosome[i] = rand() % 2;
@@ -17,10 +18,10 @@ std::vector<std::vector<int>> GeneticAlgorithm::initializePopulation(int populat
     return population;
 }
 
-std::vector<std::vector<int>> GeneticAlgorithm::selection(std::vector<std::vector<int>>& population, std::vector<int>& fitnessValues, int numParents) {
-    std::vector<std::vector<int>> parents(numParents, std::vector<int>(population[0].size()));
+vector<vector<int>> GeneticAlgorithm::selection(vector<vector<int>>& population, vector<int>& fitnessValues, int numParents) {
+    vector<vector<int>> parents(numParents, vector<int>(population[0].size()));
     for (int i = 0; i < numParents; ++i) {
-        auto maxFitnessIndex = std::max_element(fitnessValues.begin(), fitnessValues.end());
+        auto maxFitnessIndex = max_element(fitnessValues.begin(), fitnessValues.end());
         int index = maxFitnessIndex - fitnessValues.begin();
         parents[i] = population[index];
         fitnessValues[index] = -1;
@@ -28,8 +29,8 @@ std::vector<std::vector<int>> GeneticAlgorithm::selection(std::vector<std::vecto
     return parents;
 }
 
-std::vector<std::vector<int>> GeneticAlgorithm::crossover(std::vector<std::vector<int>>& parents, int numOffsprings) {
-    std::vector<std::vector<int>> offsprings(numOffsprings, std::vector<int>(parents[0].size()));
+vector<vector<int>> GeneticAlgorithm::crossover(vector<vector<int>>& parents, int numOffsprings) {
+    vector<vector<int>> offsprings(numOffsprings, vector<int>(parents[0].size()));
     int crossoverPoint = parents[0].size() / 2;
     for (int i = 0; i < numOffsprings; ++i) {
         int parent1Index = i % parents.size();
@@ -44,8 +45,8 @@ std::vector<std::vector<int>> GeneticAlgorithm::crossover(std::vector<std::vecto
     return offsprings;
 }
 
-std::vector<std::vector<int>> GeneticAlgorithm::mutation(std::vector<std::vector<int>>& offsprings, double mutationRate) {
-    std::vector<std::vector<int>> mutants = offsprings;
+vector<vector<int>> GeneticAlgorithm::mutation(vector<vector<int>>& offsprings, double mutationRate) {
+    vector<vector<int>> mutants = offsprings;
     for (auto& chromosome : mutants) {
         for (int i = 0; i < chromosome.size(); ++i) {
             double randomValue = (double)rand() / RAND_MAX;
@@ -57,25 +58,25 @@ std::vector<std::vector<int>> GeneticAlgorithm::mutation(std::vector<std::vector
     return mutants;
 }
 
-std::vector<int> GeneticAlgorithm::optimize(std::vector<std::vector<int>>& population, std::vector<int>& fitnessValues, std::vector<int>& weights, std::vector<int>& values, int knapsackCapacity, int numGenerations) {
-    std::vector<int> parameters;
+vector<int> GeneticAlgorithm::optimize(vector<vector<int>>& population, vector<int>& fitnessValues, vector<int>& weights, vector<int>& values, int knapsackCapacity, int numGenerations) {
+    vector<int> parameters;
     for (int generation = 0; generation < numGenerations; ++generation) {
-        std::vector<std::vector<int>> parents = selection(population, fitnessValues, population.size() / 2);
-        std::vector<std::vector<int>> offsprings = crossover(parents, population.size() - parents.size());
-        std::vector<std::vector<int>> mutants = mutation(offsprings, 0.15);
+        vector<vector<int>> parents = selection(population, fitnessValues, population.size() / 2);
+        vector<vector<int>> offsprings = crossover(parents, population.size() - parents.size());
+        vector<vector<int>> mutants = mutation(offsprings, 0.15);
         population.clear();
         population.insert(population.end(), parents.begin(), parents.end());
         population.insert(population.end(), mutants.begin(), mutants.end());
         fitnessValues = calculateFitnessValues(population, weights, values, knapsackCapacity);
     }
-    auto maxFitnessIndex = std::max_element(fitnessValues.begin(), fitnessValues.end());
+    auto maxFitnessIndex = max_element(fitnessValues.begin(), fitnessValues.end());
     int index = maxFitnessIndex - fitnessValues.begin();
     parameters = population[index];
     return parameters;
 }
 
-std::vector<int> GeneticAlgorithm::calculateFitnessValues(std::vector<std::vector<int>>& population, std::vector<int>& weights, std::vector<int>& values, int knapsackCapacity) {
-    std::vector<int> fitnessValues(population.size(), 0);
+vector<int> GeneticAlgorithm::calculateFitnessValues(vector<vector<int>>& population, vector<int>& weights, vector<int>& values, int knapsackCapacity) {
+    vector<int> fitnessValues(population.size(), 0);
     for (size_t i = 0; i < population.size(); ++i) {
         int totalWeight = 0;
         int totalValue = 0;

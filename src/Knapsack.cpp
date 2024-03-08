@@ -1,6 +1,7 @@
 #include "Knapsack.hpp"
 #include <iostream>
 #include <cstdlib>
+using namespace std;
 
 Knapsack::Knapsack() {}
 
@@ -17,7 +18,7 @@ void Knapsack::generateItems(int itemCount) {
     }
 }
 
-int Knapsack::calculateFitness(std::vector<int>& population, int capacity) {
+int Knapsack::calculateFitness(vector<int>& population, int capacity) {
     int fitness = 0;
     int totalWeight = 0;
     for (size_t i = 0; i < population.size(); ++i) {
@@ -32,8 +33,8 @@ int Knapsack::calculateFitness(std::vector<int>& population, int capacity) {
     return fitness;
 }
 
-std::vector<int> Knapsack::selectItems(std::vector<int>& itemNumbers, std::vector<int>& population) {
-    std::vector<int> selectedItems;
+vector<int> Knapsack::selectItems(vector<int>& itemNumbers, vector<int>& population) {
+    vector<int> selectedItems;
     for (size_t i = 0; i < population.size(); ++i) {
         if (population[i] != 0) {
             selectedItems.push_back(itemNumbers[i]);
@@ -42,7 +43,7 @@ std::vector<int> Knapsack::selectItems(std::vector<int>& itemNumbers, std::vecto
     return selectedItems;
 }
 
-int Knapsack::calculateTotalWeight(std::vector<int>& selectedItems, std::vector<int>& weights) {
+int Knapsack::calculateTotalWeight(vector<int>& selectedItems, vector<int>& weights) {
     int totalWeight = 0;
     for (size_t i = 0; i < selectedItems.size(); ++i) {
         totalWeight += weights[selectedItems[i] - 1];
@@ -50,9 +51,9 @@ int Knapsack::calculateTotalWeight(std::vector<int>& selectedItems, std::vector<
     return totalWeight;
 }
 
-void Knapsack::printSelectedItems(std::vector<int>& selectedItems) {
+void Knapsack::printSelectedItems(vector<int>& selectedItems) {
     for (size_t i = 0; i < selectedItems.size(); ++i) {
-        std::cout << selectedItems[i] << "\t";
+        cout << selectedItems[i] << "\t";
     }
-    std::cout << std::endl;
+    cout << endl;
 }

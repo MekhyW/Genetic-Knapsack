@@ -1,5 +1,6 @@
 #ifndef GENETICALGORITHM_HPP
 #define GENETICALGORITHM_HPP
+using namespace std;
 
 #include <vector>
 
@@ -7,14 +8,14 @@ class GeneticAlgorithm {
 public:
     GeneticAlgorithm();
     ~GeneticAlgorithm();
-    std::vector<std::vector<int>> initializePopulation(int populationSize, int chromosomeSize);
-    std::vector<std::vector<int>> selection(std::vector<std::vector<int>>& population, std::vector<int>& fitnessValues, int numParents);
-    std::vector<std::vector<int>> crossover(std::vector<std::vector<int>>& parents, int numOffsprings);
-    std::vector<std::vector<int>> mutation(std::vector<std::vector<int>>& offsprings, double mutationRate);
-    std::vector<int> optimize(std::vector<std::vector<int>>& population, std::vector<int>& fitnessValues, std::vector<int>& weights, std::vector<int>& values, int knapsackCapacity, int numGenerations);
+    vector<vector<int>> initializePopulation(int populationSize, int chromosomeSize);
+    vector<vector<int>> selection(vector<vector<int>>& population, vector<int>& fitnessValues, int numParents);
+    vector<vector<int>> crossover(vector<vector<int>>& parents, int numOffsprings);
+    vector<vector<int>> mutation(vector<vector<int>>& offsprings, double mutationRate);
+    vector<int> optimize(vector<vector<int>>& population, vector<int>& fitnessValues, vector<int>& weights, vector<int>& values, int knapsackCapacity, int numGenerations);
 
 private:
-    std::vector<int> calculateFitnessValues(std::vector<std::vector<int>>& population, std::vector<int>& weights, std::vector<int>& values, int knapsackCapacity);
+    vector<int> calculateFitnessValues(vector<vector<int>>& population, vector<int>& weights, vector<int>& values, int knapsackCapacity);
 };
 
 #endif
