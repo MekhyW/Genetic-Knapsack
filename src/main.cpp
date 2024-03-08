@@ -1,16 +1,34 @@
+#include <iostream>
 #include "Knapsack.hpp"
 #include "GeneticAlgorithm.hpp"
 #include "Visualization.hpp"
-#include <iostream>
-#include <vector>
 using namespace std;
 
 int main() {
-    vector<int> weights = { /* Fill with weights */ };
-    vector<int> values = { /* Fill with values */ };
-    int knapsackCapacity = /* Set knapsack capacity */;
-    int numGenerations = /* Set number of generations */;
-    int populationSize = /* Set population size */;
+    int numItems;
+    int knapsackCapacity;
+    int numGenerations;
+    int populationSize;
+    cout << "Enter the number of items: ";
+    cin >> numItems;
+    vector<int> weights(numItems);
+    vector<int> values(numItems);
+    cout << "Enter the weights of items:\n";
+    for (int i = 0; i < numItems; ++i) {
+        cout << "Item " << i + 1 << ": ";
+        cin >> weights[i];
+    }
+    cout << "Enter the values of items:\n";
+    for (int i = 0; i < numItems; ++i) {
+        cout << "Item " << i + 1 << ": ";
+        cin >> values[i];
+    }
+    cout << "Enter the capacity of the knapsack: ";
+    cin >> knapsackCapacity;
+    cout << "Enter the number of generations: ";
+    cin >> numGenerations;
+    cout << "Enter the population size: ";
+    cin >> populationSize;
 
     Knapsack knapsack(weights, values, knapsackCapacity);
 
